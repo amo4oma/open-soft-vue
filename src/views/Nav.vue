@@ -2,30 +2,30 @@
  
  <nav class="navbar navbar-expand-lg fixed-top" ref="headRef">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><img class="logo" src="../assets/nav-logo.png" alt=""></a>
+          <a class="navbar-brand"  href="#"><img class="logo" src="../assets/nav-logo.png" alt=""></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="#" >Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Our Services</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="#">Our Products</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown link
+                <a class="nav-link dropdown-toggle" href="#contact" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Contact Us
                 </a>
-                <ul class="dropdown-menu">
+                <!-- <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">Action</a></li>
                   <li><a class="dropdown-item" href="#">Another action</a></li>
                   <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+                </ul> -->
               </li>
             </ul>
           </div>
@@ -36,8 +36,18 @@
 
 <script>
 export default {
+  data(){
+return {}
+  },
   name: 'HelloWorld',
   methods: {
+    
+      scroll(id) {  
+      document.getElementById(id).scrollIntoView({
+        behavior: "smooth"
+      });
+    },
+ 
       vueOnScroll() {
       
         const refs = this.$refs.headRef; // assign the reference in variable
@@ -46,16 +56,16 @@ export default {
           if (curr > 1900) {
             refs.classList.add("scrolled");
             refs.classList.remove("scrollDown");
-            console.log(curr)
+          
           } else {
             refs.classList.add("scrollDown");
             refs.classList.remove("scrolled");
-            console.log(curr)
+     
           }
           if (curr === 0) {
             refs.classList.remove("scrollDown");
             refs.classList.remove("scrolled");
-
+            
           }
            
         });

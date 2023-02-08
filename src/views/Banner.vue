@@ -36,10 +36,10 @@
             </div>
           
             </transition>
-            <div class="circle"></div>
+            <div class="circle" ref="circle"></div>
             <div class="row">
-              <div class="col-lg-6"></div>
-              <div class="col-lg-6">
+              <div class="col-lg-6 col-sm-12"></div>
+              <div class="col-lg-6 col-sm-12">
                 <div class="about whatis">
                   <h1>About Us</h1>
                   <p>OpenSoft is a software company that specializes in creating information technology solutions for various sectors. Our services include the development of ERP systems, mobile apps, web apps, and system analysis. With our team of experienced professionals, we are dedicated to providing high-quality and innovative solutions to meet the unique needs of our clients.</p>
@@ -76,12 +76,16 @@ import { ScrollTrigger} from 'gsap/ScrollTrigger';
 import ScrollSmoother  from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollSmoother);
+ 
 
 export default {
+  data(){
+    
+  },
   setup(){
 
     const beforeEnter= (el)=>{
-      el.style.transform = 'translateY(-60px)'
+      el.style.transform = 'translate(-200px, -60px)'
       el.style.opacity = 0
     }
     const enter= (el)=>{
@@ -103,6 +107,7 @@ export default {
   this.scrollAnimation();
   this.leavingAnimation();
   this.smothS();
+  this.vueOnScroll();
  },
  methods:{
   smothS(){
@@ -112,20 +117,42 @@ export default {
   smoothTouch: 0.1,        // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
 })
   },
-
+  scroll(id) {  
+      document.getElementById(id).scrollIntoView({
+        behavior: "smooth"
+      });
+    },
+    vueOnScroll() {
+      
+      const refs = this.$refs.headRef; // assign the reference in variable
+      window.addEventListener("scroll", () => {
+        var curr = window.pageYOffset;
+        if (curr > 0) {
+          refs.classList.remove("hide");
+  
+          
+        }else{
+          refs.classList.remove("hide");
+        }
+         
+      });
+    },
   leavingAnimation(){
     gsap.timeline({
       scrollTrigger:{
         trigger:"#moving",
         start:"bottom +=250",
         end:"+=100",
-        markers:true,
+    
         scrub:1,
      
 
       }
     })
     .to(".circle",{duration : 3, scale:0})
+
+    .to(".sec-2-content",{duration : 10, y :-100, ease : "power5.inOut", opacity:1})
+    
     
   },
   scrollAnimation(){
@@ -134,19 +161,19 @@ export default {
         trigger:"#moving",
         start:"top top",
         end:"+=1800",
-        markers:true,
+       
         pin:true,
         scrub:1,
      
 
       }
     })
-
+ 
     .to(".h5",{duration : 2, x:"-100%",ease: "power2.inOut"},'firs')
     .to(".banner-logo",{duration : 2, x:"-140%",ease: "power2.inOut"},'ed')
     .to(".h3",{duration : 2, x:"-105%",ease: "power2.inOut"},'jid')
     .from(".circle",{y:"100%",ease: "power2.inOut"})
-    .to(".circle",{duration : 3, scale:5, x:'-90%',ease: "power2.inOut"})
+    .to(".circle",{duration : 3, x:'-90%',ease: "power2.inOut"})
     .to(".whatis",{duration : 3, y:'-40%',opacity:1,ease: "power2.inOut"})
     .to(".circle",{duration : 3})
     .to(".circle",{duration : 3})
@@ -165,6 +192,7 @@ export default {
     .to(".vision",{duration : 3,opacity:1,y:"-100%", x:"35rem",delay:2})
     .to(".vision",{duration : 3,opacity:1,y:"-100%", x:"35rem",delay:2})
     .to(".particles",{duration : 3, display :"none"})
+    
     // .to(".about",{duration : 3, y:'40%',opacity:0})
     // .to(".circle",{duration : 3, scale:0.3, x:'-90%'})
     // .to(".h5",{duration : 2, x:"0%"})
@@ -177,7 +205,10 @@ export default {
 }
 </script>
  
-<style>
+<style lang="scss">
+ .hide{
+  display: none;
+ }
 /* .fade-enter-from{
   opacity: 0;
 }
@@ -196,6 +227,9 @@ export default {
 } */
 #moving{
   overflow: hidden;
+}
+.particles{
+  height: 100vh;
 }
 .vision,.mission{
   width: 250px;
@@ -217,6 +251,15 @@ export default {
   right: 30px;
   opacity: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  h1{
+    font-size: 35px;
+  }
+  p{
+    font-size: 1.8rem;
+    @media (max-width:700px) {
+      font-size: 17px ;
+    }
+  }
 }
 .mission-col{
   opacity: 0;
@@ -301,7 +344,8 @@ export default {
   .content{
       position: absolute;
       z-index: 2;
-      left: 36%;
+      left: 50%;
+      transform: translate(-200px, 0px);
       top: 40%;
       width: 400px;
       height: 150px;
